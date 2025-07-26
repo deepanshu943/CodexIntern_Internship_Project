@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant with Real-Time Data</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9fafb;
+            color: #333;
+            text-align: center;
+            padding: 2rem;
+        }
+        h1 {
+            color: #007acc;
+        }
+        form {
+            margin: 2rem auto;
+            width: 90%;
+            max-width: 500px;
+            padding: 1.5rem;
+            background-color: #e6f7ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 1rem 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+        .response-box {
+            margin: 2rem auto;
+            padding: 1rem;
+            width: 90%;
+            max-width: 500px;
+            background-color: #fffbe6;
+            border: 1px solid #ffec99;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        ul {
+            text-align: left;
+            margin: 2rem auto;
+            padding: 0;
+            width: 90%;
+            max-width: 500px;
+            list-style-type: none;
+        }
+        li {
+            background-color: #e0f7fa;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+        }
+        .user {
+            font-weight: bold;
+            color: #00796b;
+        }
+        .ai {
+            color: #005cb2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Crypto currency price and Weather report</h1>
+    </header>
+
+    <section>
+        <form method="POST" aria-label="User query form">
+            <label for="user_input">Ask something:</label><br>
+            <input type="text" id="user_input" name="user_input" 
+                   placeholder="E.g., 'What's the price of Bitcoin?' or 'Weather in Paris'">
+            <button type="submit">Submit</button>
+        </form>
+
+        {% if response %}
+            <div class="response-box">
+                <h2>AI Response:</h2>
+                <p>{{ response }}</p>
+            </div>
+        {% endif %}
+    </section>
+
+    {% if history %}
+        <section>
+            <h2>Conversation History:</h2>
+            <ul>
+                {% for msg in history %}
+                    {% set user_text, ai_text = msg.split('\n')[0].split(':', 1)[1].strip(), msg.split('\n')[1].split(':', 1)[1].strip() %}
+                    <li><span class="user">You:</span> {{ user_text }}</li>
+                    <li><span class="ai">AI:</span> {{ ai_text }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+    {% endif %}
+</body>
+</html>
